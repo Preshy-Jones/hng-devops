@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  api:
+    restart: always
+    container_name: api
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - hng
+  frontend:
+    restart: always
+    command : npm start
+    container_name: frontend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - api
+    networks:
+      - hng
+networks:
+  hng:
